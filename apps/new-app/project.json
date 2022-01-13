@@ -1,0 +1,71 @@
+{
+  "root": "apps/new-app",
+  "sourceRoot": "apps/new-app/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/new-app",
+        "index": "apps/new-app/src/index.html",
+        "baseHref": "/",
+        "main": "apps/new-app/src/main.tsx",
+        "polyfills": "apps/new-app/src/polyfills.ts",
+        "tsConfig": "apps/new-app/tsconfig.app.json",
+        "assets": ["apps/new-app/src/favicon.ico", "apps/new-app/src/assets"],
+        "styles": ["apps/new-app/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/new-app/src/environments/environment.ts",
+              "with": "apps/new-app/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "options": {
+        "buildTarget": "new-app:build",
+        "hmr": true,
+        "proxyConfig": "apps/new-app/proxy.conf.json"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "new-app:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/new-app/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/new-app"],
+      "options": {
+        "jestConfig": "apps/new-app/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
